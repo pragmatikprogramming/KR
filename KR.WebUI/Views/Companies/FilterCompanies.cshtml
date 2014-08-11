@@ -1,0 +1,33 @@
+﻿<table class="table">
+    <thead>
+        <tr>
+            <td style="font-weight: bold;">Company Name:</td>
+            <td width="13px;"></td>
+            <td width="13px;"></td>
+        </tr>
+    </thead>
+    @foreach (var comp in Model)
+    {
+        <tr id="compList" style width="100%">
+            <td>@comp.Name</td>
+            <td><a href="/Companies/EditCompany/@comp.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a></td>
+            <td><i class="icon-remove" title="Delete" alt="Delete"></i></td>
+        </tr>
+    }
+    <tr>
+        <td colspan="3">
+        @if (ViewBag.PaginationStart > 1)
+        {
+            @:...&nbsp;&nbsp;
+        }
+        @for (var i = ViewBag.PaginationStart; i <= ViewBag.PaginationEnd; i++)
+        {
+            <a href="/Companies/SearchCompany/@i/@ViewBag.Filter">@i &nbsp;&nbsp;&nbsp;</a>
+        }
+        @if(ViewBag.PaginationEnd < ViewBag.NumPages)
+        {
+            @: ...
+        }
+        </td>
+    </tr>
+</table>
