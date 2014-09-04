@@ -67,6 +67,9 @@ namespace KR.App_Start
             kernel.Bind<ICompanyRepository>().To<CompanyRepository>();
             kernel.Bind<ICandidateRepository>().To<CandidateRepository>();
             kernel.Bind<IJobOrderRepository>().To<JobOrderRepository>();
+            kernel.Bind<INoteRepository>().To<NoteRepository>();
+            kernel.Bind<IInterviewRepository>().To<InterviewRepository>();
+            kernel.Bind<IOfferRepository>().To<OfferRepository>();
         }        
     }
 }

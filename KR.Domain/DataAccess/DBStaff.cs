@@ -78,5 +78,137 @@ namespace KR.Domain.DataAccess
             return m_Staff;
 
         }
+
+        public static void DeleteStaff(int id)
+        {
+            SqlConnection conn = DB.DbWriteOnlyConnect();
+            conn.Open();
+
+            string queryString = "DELETE FROM CRM_Staff WHERE id = @id";
+            SqlCommand delStaff = new SqlCommand(queryString, conn);
+            delStaff.Parameters.AddWithValue("id", id);
+            delStaff.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        public static List<Staff> Pagination(int pageNum, int mode, string filter)
+        {
+            SqlConnection conn = DB.DbReadOnlyConnect();
+            conn.Open();
+
+            int total = pageNum * 50;
+
+            string queryString = "";
+
+            if (filter != "" && mode == 0)
+            {
+                queryString = "SELECT * FROM (SELECT TOP 50 * FROM (SELECT TOP " + total + " * FROM CRM_Staff WHERE lastName like @filter + '%' ORDER BY lastName ASC) AS COMP_TABLE ORDER BY lastName DESC) AS COMP_TABLE2 ORDER BY lastName ASC";
+            }
+            else if (filter != "" && mode == 1)
+            {
+                queryString = "SELECT * FROM (SELECT TOP 50 * FROM (SELECT TOP " + total + " s.id, s.firstName, s.lastName, s.email, s.companyId, s.title, s.optOut, s.dateEntered FROM CRM_Staff s, CRM_Companies c WHERE s.companyId = c.id AND c.description like '%' + @filter + '%' ORDER BY lastName ASC) AS COMP_TABLE ORDER BY lastName DESC) AS COMP_TABLE2 ORDER BY lastName ASC";
+            }
+            else
+            {
+                queryString = "SELECT * FROM (SELECT TOP 50 * FROM (SELECT TOP " + total + " * FROM CRM_Staff ORDER BY lastName ASC) AS COMP_TABLE ORDER BY lastName DESC) AS COMP_TABLE2 ORDER BY lastName ASC";
+            }
+
+            SqlCommand getStaff = new SqlCommand(queryString, conn);
+            if (filter != "")
+            {
+                getStaff.Parameters.AddWithValue("filter", filter);
+            }
+            SqlDataReader staffReader = getStaff.ExecuteReader();
+
+            List<Staff> m_Staffs = new List<Staff>();
+
+            while (staffReader.Read())
+            {
+                Staff m_Staff = new Staff();
+
+                m_Staff.Id = staffReader.GetInt32(0);
+                m_Staff.FirstName = staffReader.GetString(1);
+                m_Staff.LastName = staffReader.GetString(2);
+                m_Staff.Email = staffReader.GetString(3);
+                m_Staff.CompanyId = staffReader.GetInt32(4);
+                m_Staff.Title = staffReader.GetString(5);
+                m_Staff.OptOut = (int)staffReader.GetByte(6);
+                m_Staff.DateEntered = staffReader.GetDateTime(7);
+
+                m_Staffs.Add(m_Staff);
+            }
+
+
+            conn.Close();
+
+            return m_Staffs;
+        }
+
+        public static int GetNumStaff(string filter, int mode)
+        {
+            SqlConnection conn = DB.DbReadOnlyConnect();
+            conn.Open();
+
+            string queryString = "";
+
+            if (filter != "" && mode == 0)
+            {
+                queryString = "SELECT COUNT(*) FROM CRM_Staff WHERE lastName like @filter + '%'";
+            }
+            else if (filter != "" && mode == 1)
+            {
+                queryString = "SELECT COUNT(*) FROM CRM_Staff s, CRM_Companies c WHERE s.companyId = c.id AND c.description like '%' + @filter + '%'";
+            }
+            else
+            {
+                queryString = "SELECT COUNT(*) FROM CRM_Staff";
+            }
+
+            SqlCommand m_Staff = new SqlCommand(queryString, conn);
+            if (filter != "")
+            {
+                m_Staff.Parameters.AddWithValue("filter", filter);
+            }
+            int numStaff = (int)m_Staff.ExecuteScalar();
+
+            conn.Close();
+
+            return numStaff;
+        }
+
+        public static List<Staff> GetStaffByCompanyId(int id)
+        {
+            SqlConnection conn = DB.DbReadOnlyConnect();
+            conn.Open();
+
+            string queryString = "SELECT * FROM CRM_Staff WHERE companyId = @companyId";
+            SqlCommand getStaff = new SqlCommand(queryString, conn);
+            getStaff.Parameters.AddWithValue("companyId", id);
+
+            SqlDataReader staffReader = getStaff.ExecuteReader();
+
+            List<Staff> m_Staffs = new List<Staff>();
+
+            while (staffReader.Read())
+            {
+                Staff m_Staff = new Staff();
+
+                m_Staff.Id = staffReader.GetInt32(0);
+                m_Staff.FirstName = staffReader.GetString(1);
+                m_Staff.LastName = staffReader.GetString(2);
+                m_Staff.Email = staffReader.GetString(3);
+                m_Staff.CompanyId = staffReader.GetInt32(4);
+                m_Staff.Title = staffReader.GetString(5);
+                m_Staff.OptOut = (int)staffReader.GetByte(6);
+                m_Staff.DateEntered = staffReader.GetDateTime(7);
+
+                m_Staffs.Add(m_Staff);
+            }
+
+
+            conn.Close();
+            return m_Staffs;
+        }
     }
 }

@@ -49,6 +49,11 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <style type="text/css">
+        .ui-dialog-titlebar-close {
+            visibility: hidden;
+        }
+    </style>
   </head>
 
   <!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
@@ -90,16 +95,14 @@
     <div class="sidebar-nav">
         <a href="#administration-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>Staff</a>
         <ul id="administration-menu" class="nav nav-list collapse in">
-            <li ><a href="index.html">Add Staff</a></li>
-            <li ><a href="index.html">Delete Staff</a></li>
-            <li ><a href="index.html">Search Staff</a></li>
+            <li ><a href="/Staff/AddStaff">Add Staff</a></li>
+            <li ><a href="/Staff/SearchStaff">Search Staff</a></li>
         </ul>
 
         <a href="#components-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Candidates</a>
         <ul id="components-menu" class="nav nav-list collapse">
-            <li ><a href="index.html">Add Candidates</a></li>
-            <li ><a href="index.html">Delete Candidates</a></li>
-            <li ><a href="index.html">Search Candidates</a></li>
+            <li ><a href="/Candidate/AddCandidate">Add Candidates</a></li>
+            <li ><a href="/Candidate/SearchCandidate">Search Candidates</a></li>
         </ul>
 
         <a href="#help-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>Companies</a>
@@ -110,7 +113,6 @@
 	<a href="#job-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>Job Orders</a>
         <ul id="job-menu" class="nav nav-list collapse">
             <li ><a href="">Add Job</a></li>
-            <li ><a href="">Delete Job</a></li>
             <li ><a href="">Search Jobs</a></li>
         </ul>
     </div>

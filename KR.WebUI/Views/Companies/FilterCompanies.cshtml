@@ -9,7 +9,7 @@
     @foreach (var comp in Model)
     {
         <tr id="compList" style width="100%">
-            <td>@comp.Name</td>
+            <td><a href="/Companies/DisplayCompany/@comp.Id">@comp.Name</a></td>
             <td><a href="/Companies/EditCompany/@comp.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a></td>
             <td><i class="icon-remove" title="Delete" alt="Delete"></i></td>
         </tr>
@@ -22,7 +22,7 @@
         }
         @for (var i = ViewBag.PaginationStart; i <= ViewBag.PaginationEnd; i++)
         {
-            <a href="/Companies/SearchCompany/@i/@ViewBag.Filter">@i &nbsp;&nbsp;&nbsp;</a>
+            <a href="/Companies/SearchCompany/@i/0/@ViewBag.Filter">@i &nbsp;&nbsp;&nbsp;</a>
         }
         @if(ViewBag.PaginationEnd < ViewBag.NumPages)
         {

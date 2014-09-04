@@ -18,6 +18,9 @@ namespace KR.Domain.Entities
         private DateTime resumeLastUpdate;
         private byte[] resumeBinary;
         private int companyId;
+        private string fileType;
+
+
 
         
 
@@ -151,6 +154,18 @@ namespace KR.Domain.Entities
             set 
             { 
                 companyId = value; 
+            }
+        }
+
+        public string FileType
+        {
+            get 
+            { 
+                return fileType; 
+            }
+            set 
+            { 
+                fileType = value; 
             }
         }
     }

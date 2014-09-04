@@ -10,10 +10,21 @@ namespace KR.Domain.Abstract
 {
     public interface ICandidateRepository
     {
-        void AddCandidate(Candidate m_Cand, HttpPostedFileBase fileUpload);
-        void UpdateCandidate(Candidate m_Cand, HttpPostedFileBase fuleUpload);
+        int AddCandidate(Candidate m_Cand, HttpPostedFileBase fileUpload);
+        void UpdateCandidate(Candidate m_Cand);
         void DeleteCandidate(int id);
         Candidate RetrieveOne(int id);
         List<Candidate> RetrieveAll();
+        List<Candidate> Pagination(int pageNum, int mode, string filter);
+        int GetNumCandidates(string filter, int mode);
+        List<Candidate> GetCandidatesByCompanyId(int id);
+        List<Resume> GetResumesSent(int id);
+        List<Interview> GetInterviews(int id);
+        List<Note> GetNotes(int id);
+        void UploadResume(int id, byte[] resume, string fileType, string fileText);
+        string FileToText(HttpPostedFileBase fileUpload, string fileType);
+        byte[] FileToBinary(HttpPostedFileBase fileUpload);
+        byte[] ViewResume(int id);
+        void SendResume(int id, int JobOrderId, string EmailText);
     }
 }

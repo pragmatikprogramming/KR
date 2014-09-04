@@ -11,10 +11,18 @@ namespace KR.WebUI.Controllers
     public class CompaniesController : Controller
     {
         ICompanyRepository CompanyRepository;
+        IStaffRepository StaffRepository;
+        ICandidateRepository CandidateRepository;
+        IJobOrderRepository JobOrderRepository;
+        INoteRepository NoteRepository;
 
-        public CompaniesController(ICompanyRepository CompanyRepo)
+        public CompaniesController(ICompanyRepository CompanyRepo, IStaffRepository StaffRepo, ICandidateRepository CandidateRepo, IJobOrderRepository JobOrderRepo, INoteRepository NoteRepo)
         {
             CompanyRepository = CompanyRepo;
+            StaffRepository = StaffRepo;
+            CandidateRepository = CandidateRepo;
+            JobOrderRepository = JobOrderRepo;
+            NoteRepository = NoteRepo;
         }
 
         public ActionResult Index()
@@ -69,10 +77,10 @@ namespace KR.WebUI.Controllers
         }
 
         [HttpGet]
-        public ActionResult SearchCompany(int pageNum, string filter)
+        public ActionResult SearchCompany(int pageNum, int mode, string filter)
         {
-            List<Companies> m_Companies = CompanyRepository.Pagination(pageNum, filter);
-            int numCompanies = CompanyRepository.GetNumCompanies(filter);
+            List<Companies> m_Companies = CompanyRepository.Pagination(pageNum, filter, mode);
+            int numCompanies = CompanyRepository.GetNumCompanies(filter, mode);
             int numPages = numCompanies / 50;
             
             if (numPages % 50 > 0)
@@ -96,17 +104,59 @@ namespace KR.WebUI.Controllers
 
             ViewBag.NumPages = numPages;
             ViewBag.PageNumber = pageNum;
-            ViewBag.Filter = filter;
+            if (mode == 0)
+            {
+                ViewBag.Filter = filter;
+            }
+            else
+            {
+                ViewBag.DescriptionFilter = filter;
+            }
+            ViewBag.Mode = mode;
 
             return View("SearchCompany", m_Companies);
         }
 
         [HttpPost]
-        public ActionResult FilterCompanies(int pageNum, string filter)
+        public ActionResult DescriptionFilter(int pageNum, int mode, string filter)
         {
-            List<Companies> m_Companies = CompanyRepository.Pagination(pageNum, filter);
+            List<Companies> m_Companies = CompanyRepository.Pagination(pageNum, filter, 1);
 
-            int numCompanies = CompanyRepository.GetNumCompanies(filter);
+            int numCompanies = CompanyRepository.GetNumCompanies(filter, 1);
+            int numPages = numCompanies / 50;
+
+            if (numPages % 50 > 0)
+            {
+                numPages++;
+            }
+            if (pageNum > 16)
+            {
+                ViewBag.PaginationStart = pageNum - 15;
+                ViewBag.PaginationEnd = pageNum + 15;
+            }
+            else
+            {
+                ViewBag.PaginationStart = 1;
+                ViewBag.PaginationEnd = 31;
+            }
+            if (ViewBag.PaginationEnd > numPages)
+            {
+                ViewBag.PaginationEnd = numPages;
+            }
+
+            ViewBag.NumPages = numPages;
+            ViewBag.PageNumber = pageNum;
+            ViewBag.DescriptionFilter = filter;
+
+            return View("DescriptionFilter", m_Companies);
+        }
+        
+        [HttpPost]
+        public ActionResult FilterCompanies(int pageNum, int mode, string filter)
+        {
+            List<Companies> m_Companies = CompanyRepository.Pagination(pageNum, filter, 0);
+
+            int numCompanies = CompanyRepository.GetNumCompanies(filter, 0);
             int numPages = numCompanies / 50;
 
             if (numPages % 50 > 0)
@@ -133,6 +183,18 @@ namespace KR.WebUI.Controllers
             ViewBag.Filter = filter;
 
             return View("FilterCompanies", m_Companies);
+        }
+
+        [HttpGet]
+        public ActionResult DisplayCompany(int id)
+        {
+            Companies m_Company = CompanyRepository.RetrieveOne(id);
+            ViewBag.Staff = StaffRepository.GetStaffByCompanyId(id);
+            ViewBag.Candidates = CandidateRepository.GetCandidatesByCompanyId(id);
+            ViewBag.Jobs = JobOrderRepository.GetJobsByCompanyId(id);
+            ViewBag.Notes = NoteRepository.RetrieveAll(id, "Company");
+
+            return View("DisplayCompany", m_Company);
         }
     }
 }

@@ -11,8 +11,11 @@ namespace KR.Domain.Abstract
     {
         void AddStaff(Staff m_Staff);
         void EditStaff(Staff m_Staff);
-        void DeleteStaff();
+        void DeleteStaff(int id);
         void SearchStaff();
         Staff RetrieveOne(int id);
+        List<Staff> Pagination(int pageNum, string filter, int mode);
+        int GetNumStaff(string filter, int mode);
+        List<Staff> GetStaffByCompanyId(int id);
     }
 }

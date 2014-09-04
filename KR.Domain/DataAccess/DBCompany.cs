@@ -194,7 +194,7 @@ namespace KR.Domain.DataAccess
             return m_Contacts;
         }
 
-        public static List<Companies> Pagination(int pageNum, string filter)
+        public static List<Companies> Pagination(int pageNum, string filter, int mode)
         {
             SqlConnection conn = DB.DbReadOnlyConnect();
             conn.Open();
@@ -203,14 +203,19 @@ namespace KR.Domain.DataAccess
 
             string queryString = "";
 
-            if (filter == "")
-            {
-                queryString = "SELECT * FROM (SELECT TOP 50 * FROM (SELECT TOP " + total + " * FROM CRM_Companies ORDER BY name ASC) AS COMP_TABLE ORDER BY name DESC) AS COMP_TABLE2 ORDER BY name ASC";
-            }
-            else
+            if (filter != "" && mode == 0)
             {
                 queryString = "SELECT * FROM (SELECT TOP 50 * FROM (SELECT TOP " + total + " * FROM CRM_Companies WHERE name like @filter + '%' ORDER BY name ASC) AS COMP_TABLE ORDER BY name DESC) AS COMP_TABLE2 ORDER BY name ASC";
             }
+            else if (filter != "" && mode == 1)
+            {
+                queryString = "SELECT * FROM (SELECT TOP 50 * FROM (SELECT TOP " + total + " * FROM CRM_Companies WHERE description like '%' + @filter + '%' ORDER BY name ASC) AS COMP_TABLE ORDER BY name DESC) AS COMP_TABLE2 ORDER BY name ASC";
+            }
+            else
+            {
+                queryString = "SELECT * FROM (SELECT TOP 50 * FROM (SELECT TOP " + total + " * FROM CRM_Companies ORDER BY name ASC) AS COMP_TABLE ORDER BY name DESC) AS COMP_TABLE2 ORDER BY name ASC";
+            }
+
             SqlCommand getComps = new SqlCommand(queryString, conn);
             if (filter != "")
             {
@@ -235,7 +240,6 @@ namespace KR.Domain.DataAccess
                 m_Company.PhoneSecondary = m_Comps.GetString(8);
                 m_Company.Contact = m_Comps.GetInt32(9);
                 m_Company.Website = m_Comps.GetString(10);
-                m_Company.Description = m_Comps.GetString(11);
                 m_Company.Date = m_Comps.GetDateTime(12);
                 m_Company.Crawl = (int)m_Comps.GetByte(13);
                 m_Company.Zip = m_Comps.GetString(14);
@@ -248,21 +252,26 @@ namespace KR.Domain.DataAccess
             return m_Companies;
         }
 
-        public static int GetNumCompanies(string filter)
+        public static int GetNumCompanies(string filter, int mode)
         {
             SqlConnection conn = DB.DbReadOnlyConnect();
             conn.Open();
 
             string queryString = "";
 
-            if (filter == "")
-            {
-                queryString = "SELECT COUNT(*) FROM CRM_Companies";
-            }
-            else
+            if (filter != "" && mode == 0)
             {
                 queryString = "SELECT COUNT(*) FROM CRM_Companies WHERE name like @filter + '%'";
             }
+            else if (filter != "" && mode == 1)
+            {
+                queryString = "SELECT COUNT(*) FROM CRM_Companies WHERE description like '%' + @filter + '%'";
+            }
+            else
+            {
+                queryString = "SELECT COUNT(*) FROM CRM_Companies";
+            }
+
             SqlCommand numComps = new SqlCommand(queryString, conn);
             if (filter != "")
             {

@@ -14,5 +14,10 @@ namespace KR.Domain.Abstract
         JobOrder RetrieveOne(int id);
         List<JobOrder> RetrieveAll();
         void DeleteJobOrder(int id);
+        List<JobOrder> GetJobsByCompanyId(int id);
+        List<Resume> ResumesSent(int id);
+        List<Note> GetNotes(int id);
+        List<Interview> GetInterviews(int id);
+        void SendResume(Resume m_Resume);
     }
 }

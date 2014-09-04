@@ -113,16 +113,26 @@
   <ItemGroup>
     <Compile Include="Abstract\ICandidateRepository.cs" />
     <Compile Include="Abstract\ICompanyRepository.cs" />
+    <Compile Include="Abstract\IInterviewRepository.cs" />
     <Compile Include="Abstract\IJobOrderRepository.cs" />
+    <Compile Include="Abstract\IOfferRepository.cs" />
     <Compile Include="Abstract\IStaffRepository.cs" />
+    <Compile Include="Abstract\INoteRepository.cs" />
     <Compile Include="DataAccess\DBCandidate.cs" />
     <Compile Include="DataAccess\DBCompany.cs" />
+    <Compile Include="DataAccess\DBInterview.cs" />
     <Compile Include="DataAccess\DBJobOrder.cs" />
+    <Compile Include="DataAccess\DBNote.cs" />
+    <Compile Include="DataAccess\DBOffer.cs" />
     <Compile Include="DataAccess\DBStaff.cs" />
     <Compile Include="Entities\Candidate.cs" />
     <Compile Include="Entities\Companies.cs" />
     <Compile Include="Entities\CompanyType.cs" />
+    <Compile Include="Entities\Interview.cs" />
     <Compile Include="Entities\JobOrder.cs" />
+    <Compile Include="Entities\Note.cs" />
+    <Compile Include="Entities\Offer.cs" />
+    <Compile Include="Entities\Resume.cs" />
     <Compile Include="Entities\Staff.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -131,7 +141,10 @@
     <Compile Include="HelperClasses\GlobalDataTypes.cs" />
     <Compile Include="Models\CandidateRepository.cs" />
     <Compile Include="Models\CompanyRepository.cs" />
+    <Compile Include="Models\InterviewRepository.cs" />
     <Compile Include="Models\JobOrderRepository.cs" />
+    <Compile Include="Models\NoteRepository.cs" />
+    <Compile Include="Models\OfferRepository.cs" />
     <Compile Include="Models\StaffRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

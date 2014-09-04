@@ -55,15 +55,15 @@ namespace KR.Domain.Models
             return m_Contacts;
         }
 
-        public List<Companies> Pagination(int pageNum, string filter)
+        public List<Companies> Pagination(int pageNum, string filter, int mode)
         {
-            List<Companies> m_Companies = DBCompany.Pagination(pageNum, filter);
+            List<Companies> m_Companies = DBCompany.Pagination(pageNum, filter, mode);
             return (m_Companies);
         }
 
-        public int GetNumCompanies(string filter)
+        public int GetNumCompanies(string filter, int mode)
         {
-            int numCompanies = DBCompany.GetNumCompanies(filter);
+            int numCompanies = DBCompany.GetNumCompanies(filter, mode);
 
             return numCompanies;
 

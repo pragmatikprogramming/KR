@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Send Resume";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<div class="header">
+    <h1 class="page-title">Send Resume</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid" style="margin-top: 5%">
+        <form method="post" action="/Candidate/SendResume" id="SendResume" name="SendResume">
+            <input type="hidden" name="JobId" id="JobId" value="@ViewBag.JobId" />
+
+            <div class="formlabel">Candidate:</div>
+            <div class="formfield">
+                <select name="CandidateId">
+                    @foreach(var cand in ViewBag.Candidates)
+                    {
+                        <option value="@cand.Id">@cand.LastName, @cand.FirstName</option>
+                    }
+                </select>
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Email:</div>
+            <div class="formfield"><textarea rows="10" cols="10" name="EmailText" id="EmailText">Attached please find the resume of a qualified candidate for the position of: @Model.PositionTitle.  If you wish to speak further regarding this candidate please get in touch with me.</textarea></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">&nbsp;</div>
+            <div class="formfield"><button form="SendResume" class="btn btn-primary"><i class="icon-save"></i> Send</button></div>
+            <div class="clear">&nbsp;</div>
+
+        </form>
+    </div>
+</div>

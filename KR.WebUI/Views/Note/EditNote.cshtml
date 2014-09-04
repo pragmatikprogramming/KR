@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "EditNote";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#NoteDate").datepicker();
+    });
+
+</script>
+<div class="header">
+    <h1 class="page-title">Add Note</h1>
+</div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div style="color: red">@Html.ValidationSummary()</div>
+        <form method="post" action="/Note/EditNote" id="AddNote" name="AddNote">
+            <input type="hidden" name="id" id="id" value="@Model.Id" />
+            <input type="hidden" name="RelatedTypeId" id="RelatedTypeId" value="@Model.RelatedTypeId" />
+            <input type="hidden" name="NoteType" id="NoteType" value="@Model.NoteType" />
+            <div class="formlabel">Date:</div>
+            <div class="formfield"><input type="text" name="NoteDate" id="NoteDate" value="@Model.NoteDate.ToString("MM-dd-yyyy")" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Note:</div>
+            <div class="formfield"><textarea cols="10" rows="10" name="NoteText" id="NoteText">@Model.NoteText</textarea></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">&nbsp;</div>
+            <div class="formfield"><button form="AddNote" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+            <div class="clear">&nbsp;</div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "Display Candidate";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+<style type="text/css">
+    h3 {
+        line-height: 14px;
+    }
+</style>
+<div class="header">
+    <h1 class="page-title">@Model.LastName, @Model.FirstName &nbsp;&nbsp;&nbsp;<a href="/Note/AddNote/@Model.Id/Candidate"><button class="btn btn-primary"><i class="icon-plus"></i> Add Note</button></a>&nbsp;&nbsp;&nbsp;<a href="/Candidate/UploadResume/@Model.Id"><button class="btn btn-primary"><i class="icon-plus"></i> Upload Resume</button></a>&nbsp;&nbsp;&nbsp;<a href="/Candidate/ViewResume/@Model.Id"><button class="btn btn-primary"><i class="icon-plus"></i> View Resume</button></a>&nbsp;&nbsp;&nbsp;<a href="/Candidate/SendResume/@Model.Id"><button class="btn btn-primary"><i class="icon-plus"></i> Send Resume</button></a>&nbsp;&nbsp;&nbsp;<a href="/Interview/AddInterview/@Model.Id"><button class="btn btn-primary"><i class="icon-plus"></i> Add Interview</button></a>&nbsp;&nbsp;&nbsp;<a href="/Offer/AddOffer/@Model.Id"><button class="btn btn-primary"><i class="icon-plus"></i> Add Offer</button></a></h1>
+</div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <h3><a href="/Companies/DisplayCompany/@Model.CompanyId">@ViewBag.Company.Name</a> </h3>
+        <h3>@Model.Email</h3>
+        <br />
+        <div class="well">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#resume" data-toggle="tab">Resumes Sent</a></li>
+                <li><a href="#interview" data-toggle="tab">Interviews</a></li>
+                <li><a href="#offer" data-toggle="tab">Offers</a></li>
+                <li><a href="#note" data-toggle="tab">Notes</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active in" id="resume">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Date</th>
+                                <!--<th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var resume in ViewBag.Resumes)
+                            {
+                                <tr>
+                                    <td><a href="/JobOrder/DisplayJobOrder/@resume.JobId">@resume.JobName</a></td>
+                                    <td>@resume.DateSent.ToString("MM-dd-yyyy")</td>
+                                    <!--<td><a href="#"><i class="icon-pencil"></i></a></td>
+                                    <td><a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a></td>-->
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="interview">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var interview in ViewBag.Interviews)
+                            {
+                                <tr>
+                                    <td><a href="/JobOrder/DisplayJobOrder/@interview.JobId">@interview.JobName</a></td>
+                                    <td>@interview.InterviewDate.ToString("MM-dd-yyyy")</td>
+                                    <td>@interview.InterviewType</td>
+                                    <td><a href="/Interview/EditInterview/@interview.Id"><i class="icon-pencil"></i></a></td>
+                                    <td><a href="/Interview/DeleteInterview/@interview.Id" role="button" data-toggle="modal"><i class="icon-remove"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="offer">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Offer Date</th>
+                                <th>Offer</th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var offer in ViewBag.Offers)
+                            {
+                                <tr>
+                                    <td><a href="/JobOrder/DisplayJobOrder/@offer.JobId">@offer.JobName</a></td>
+                                    <td>@offer.OfferDate.ToString("MM-dd-yyyy")</td>
+                                    @if(offer.OfferText.Length <= 75)
+                                    {
+                                        <td>@offer.OfferText</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@offer.OfferText.Substring(0,75) ...</td>
+                                    }
+                                    <td><a href="/Offer/EditOffer/@offer.Id"><i class="icon-pencil"></i></a></td>
+                                    <td><a href="/Offer/DeleteOffer/@offer.Id" role="button" data-toggle="modal"><i class="icon-remove"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="note">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Note Text</th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var note in ViewBag.Notes)
+                            {
+                                <tr>
+                                    <td>@note.NoteDate.ToString("MM-dd-yyyy")</td>
+                                    @if(note.NoteText.Length <= 75)
+                                    {
+                                        <td>@note.NoteText</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@note.NoteText.Substring(0,75) ...</td>
+                                    }
+                                    <td><a href="/Note/EditNote/@note.Id"><i class="icon-pencil"></i></a></td>
+                                    <td><a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

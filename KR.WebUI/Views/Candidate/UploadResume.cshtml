@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "UploadResume";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<div class="header">
+    <h1 class="page-title">Upload Resume</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid" style="margin-top: 5%">
+        <form method="post" action="/Candidate/UploadResume" id="Upload" enctype="multipart/form-data" >
+            <input type="hidden" name="id" id="id" value="@ViewBag.CandId" />
+            <div class="formlabel">Resume:</div>
+            <div class="formfield"><input type="file" id="candResume" name="candResume" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">&nbsp;</div>
+            <div class="formfield"><button form="Upload" class="btn btn-primary"><i class="icon-save"></i> Upload</button></div>
+            <div class="clear">&nbsp;</div>
+        </form>
+    </div>
+</div>

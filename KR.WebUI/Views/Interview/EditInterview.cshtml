@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Edit Interview";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#InterviewDate").datepicker();
+    });
+
+</script>
+
+<div class="header">
+    <h1 class="page-title">Edit Interview</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid" style="margin-top: 5%">
+        <form method="post" action="/Interview/EditInterview" id="EditInterview" name="EditInterview">
+            <input type="hidden" name="CandidateId" value="@Model.CandidateId" id="CandidateId" />
+            <input type="hidden" name="Id" value="@Model.Id" id="Id" />
+            <div class="formlabel">Job</div>
+            <div class="formfield">
+                <select name="JobId">
+                    @foreach (var resume in ViewBag.Resumes)
+                    {
+                        if (Model.JobId == resume.JobId)
+                        {
+                            <option value="@resume.JobId" selected="selected">@resume.JobName</option>
+                        }
+                        else
+                        {
+                            <option value="@resume.JobId">@resume.JobName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Date:</div>
+            <div class="formfield"><input type="text" name="InterviewDate" id="InterviewDate" value="@Model.InterviewDate.ToString("MM-dd-yyyy")" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Type:</div>
+            <div class="formfield">
+                <select name="InterviewType">
+                    @if (Model.InterviewType == "Phone")
+                    {
+                        <option value="Phone" selected="selected">Phone</option>
+                    }
+                    else
+                    {
+                        <option value="Phone">Phone</option>
+                    }
+                    
+                    @if(Model.InterviewType == "In Person")
+                    {
+                        <option value="In Person" selected="selected">In Person</option>
+                    }
+                    else
+                    {
+                        <option value="In Person">In Person</option>
+                    }
+                </select>
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">&nbsp;</div>
+            <div class="formfield"><button form="EditInterview" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+            <div class="clear">&nbsp;</div>
+        </form>
+    </div>
+</div>

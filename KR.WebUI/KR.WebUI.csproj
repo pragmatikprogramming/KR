@@ -127,7 +127,11 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InterviewController.cs" />
     <Compile Include="Controllers\JobOrderController.cs" />
+    <Compile Include="Controllers\NoteController.cs" />
+    <Compile Include="Controllers\OfferController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -210,6 +214,28 @@
     <Content Include="Views\JobOrder\Index.cshtml" />
     <Content Include="Views\Companies\SearchCompany.cshtml" />
     <Content Include="Views\Companies\FilterCompanies.cshtml" />
+    <Content Include="Views\Companies\DescriptionFilter.cshtml" />
+    <Content Include="Views\Candidate\SearchCandidate.cshtml" />
+    <Content Include="Views\Candidate\NameFilter.cshtml" />
+    <Content Include="Views\Candidate\ResumeFilter.cshtml" />
+    <Content Include="Views\Staff\SearchStaff.cshtml" />
+    <Content Include="Views\Staff\DescriptionFilter.cshtml" />
+    <Content Include="Views\Staff\FilterStaff.cshtml" />
+    <Content Include="Views\Companies\DisplayCompany.cshtml" />
+    <Content Include="Views\JobOrder\DisplayJobOrder.cshtml" />
+    <Content Include="Views\Candidate\DisplayCandidate.cshtml" />
+    <Content Include="Views\Note\AddNote.cshtml" />
+    <Content Include="Views\Note\EditNote.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\JobOrder\EditJobOrder.cshtml" />
+    <Content Include="Views\Staff\DisplayStaff.cshtml" />
+    <Content Include="Views\Candidate\UploadResume.cshtml" />
+    <Content Include="Views\Interview\AddInterview.cshtml" />
+    <Content Include="Views\Interview\EditInterview.cshtml" />
+    <Content Include="Views\Offer\AddOffer.cshtml" />
+    <Content Include="Views\Candidate\SendResume.cshtml" />
+    <Content Include="Views\Offer\EditOffer.cshtml" />
+    <Content Include="Views\JobOrder\SendResume.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

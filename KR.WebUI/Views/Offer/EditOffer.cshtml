@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Edit Offer";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#OfferDate").datepicker();
+    });
+
+    $(function () {
+        $("#StartDate").datepicker();
+    });
+
+</script>
+<div class="header">
+    <h1 class="page-title">Edit Offer</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid" style="margin-top: 5%">
+        <div style="color: red">@Html.ValidationSummary()</div>
+        <form action="/Offer/EditOffer" method="post" name="EditOffer" id="EditOffer">
+            <input type="hidden" name="Id" id="Id" value="@Model.Id" />
+            <input type="hidden" name="CandidateId" id="CandidateId" value="@Model.CandidateId" />
+
+            <div class="formlabel">Offer Date:</div>
+            <div class="formfield"><input type="text" name="OfferDate" id="OfferDate" value="@Model.OfferDate.ToString("MM-dd-yyyy")" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Job:</div>
+            <div class="formfield">
+                <select name="JobId">
+                    @foreach (var interview in ViewBag.Interviews)
+                    {
+                        if (interview.JobId == Model.JobId)
+                        {
+                            <option value="@interview.JobId" selected="selected" >@interview.JobName</option>
+                        }
+                        else
+                        {
+                            <option value="@interview.JobId" >@interview.JobName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Offer:</div>
+            <div class="formfield"><textarea rows="10" cols="10" name="OfferText">@Model.OfferText</textarea></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Accepted:</div>
+            <div class="formfield"><input type="checkbox" value="1" name="Accepted" id="Accepted" 
+                @if(Model.Accepted == 1)
+                {
+                    @: checked="checked"
+                }
+                />
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Start Date:</div>
+            <div class="formfield">
+            @if (Model.StartDate.ToString("MM-dd-yyyy") != "01-01-0001" && Model.StartDate.ToString("MM-dd-yyyy") != "01-01-1901")
+            {
+                <input type="text" name="StartDate" id="StartDate" value="@Model.StartDate.ToString("MM-dd-yyyy")" />
+            }
+            else
+            {
+                <input type="text" name="StartDate" id="StartDate" value="" />
+            }
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">&nbsp;</div>
+            <div class="formfield"><button form="EditOffer" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+            <div class="clear">&nbsp;</div>
+
+        </form>
+    </div>
+</div>

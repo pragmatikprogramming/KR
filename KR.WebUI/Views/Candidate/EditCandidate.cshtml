@@ -28,7 +28,14 @@
                 <select name="CompanyId">
                     @foreach (var company in ViewBag.Companies)
                     {
-                        <option value="@company.Id">@company.Name</option>
+                        if(Model.CompanyId == company.Id)
+                        {
+                            <option value="@company.Id" selected="selected">@company.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@company.Id">@company.Name</option>
+                        }
                     }
                 </select>
             </div>

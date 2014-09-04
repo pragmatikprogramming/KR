@@ -9,8 +9,11 @@
 
 <div class="container-fluid">
     <div class="row-fluid" style="margin-top: 5%">
-        <div class="formlabel">Search:</div>
+        <div class="formlabel">Search Name:</div>
         <div class="formfield"><input type="text" name="filter" value="@ViewBag.Filter" id="filter" /></div>
+        <div class="formlabel">&nbsp;</div>
+        <div class="formlabel">Search Description:</div>
+        <div class="formfield"><input type="text" name="descriptionFilter" value="@ViewBag.DescriptionFilter" id="descriptionFilter" />&nbsp;&nbsp;<a href="javascript:void(0);" id="FilterByDescription">Filter</a></div>
         <div class="clear">&nbsp;</div>
         <div id="companies" style="width: 100%">
             <table class="table">
@@ -24,7 +27,7 @@
                 @foreach (var comp in Model)
                 {
                     <tr>
-                        <td>@comp.Name</td>
+                        <td><a href="/Companies/DisplayCompany/@comp.Id">@comp.Name</a></td>
                         <td><a href="/Companies/EditCompany/@comp.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a></td>
                         <td><i class="icon-remove" title="Delete" alt="Delete"></i></td>
                     </tr>
@@ -39,11 +42,18 @@
                         {
                             if(ViewBag.Filter == "")
                             {
-                                <a href="/Companies/SearchCompany/@i">@i &nbsp;&nbsp;&nbsp;</a>
+                                <a href="/Companies/SearchCompany/@i/@ViewBag.Mode">@i &nbsp;&nbsp;&nbsp;</a>
                             }
                             else
                             {
-                                <a href="/Companies/SearchCompany/@i/@ViewBag.Filter">@i &nbsp;&nbsp;&nbsp;</a>
+                                if(ViewBag.Mode == 0)
+                                {
+                                    <a href="/Companies/SearchCompany/@i/@ViewBag.Mode/@ViewBag.Filter">@i &nbsp;&nbsp;&nbsp;</a>
+                                }
+                                else
+                                {
+                                    <a href="/Companies/SearchCompany/@i/@ViewBag.Mode/@ViewBag.DescriptionFilter">@i &nbsp;&nbsp;&nbsp;</a>
+                                }
                             }
                         }
                         @if(ViewBag.PaginationEnd < ViewBag.NumPages)
@@ -54,15 +64,48 @@
                 </tr>
             </table>
         </div>
+        <div id="filteringDialog" title="Filtering Results">
+            <p>Filtering ...</p>
+        </div>
     </div>
 </div>
+
 <script type="text/javascript">
     $("#filter").keyup(function () {
         //alert("It changed");
         $.ajax({
             type: "POST",
-            url: "/Companies/FilterCompanies/1/" + $('#filter').val(),
+            url: "/Companies/FilterCompanies/1/0/" + $('#filter').val(),
             success: function (result) { $('#companies').html(result); }
         });
     });
+
+    /*$("#descriptionFilter").keyup(function () {
+        //alert("It changed");
+        if ($('#descriptionFilter').val().length >= 5) {
+            $.ajax({
+                type: "POST",
+                url: "/Companies/DescriptionFilter/1/" + $('#descriptionFilter').val(),
+                success: function (result) { $('#companies').html(result); }
+            });
+        }
+    });*/
+    $('#FilterByDescription').on("click", filterCompanies);
+    $("#filteringDialog").dialog({
+        hide: 'slide',
+        show: 'slide',
+        autoOpen: false,
+        width: '400px',
+    });
+    function filterCompanies() {
+        $.ajax({
+            type: "POST",
+            url: "/Companies/DescriptionFilter/1/1/" + $('#descriptionFilter').val(),
+            beforeSend: function () {
+                $("#filteringDialog").dialog('open').html("<p>Please Wait...</p>");
+            },
+            success: function (result) { $('#companies').html(result); $('#filteringDialog').dialog('close'); }
+        });
+        
+    }
 </script>

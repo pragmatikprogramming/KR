@@ -18,8 +18,8 @@ namespace KR.Domain.Abstract
         List<Companies> RetrieveAll();
         List<CompanyType> GetCompanyTypes();
         List<GlobalDataTypes.ContactSelect> GetContacts(int id);
-        List<Companies> Pagination(int pageNum, string filter);
-        int GetNumCompanies(string filter);
+        List<Companies> Pagination(int pageNum, string filter, int mode);
+        int GetNumCompanies(string filter, int mode);
 
     }
 }

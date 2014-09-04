@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "DisplayCompany";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+<style type="text/css">
+    h3 {
+        line-height: 14px;
+    }
+</style>
+<div class="header">
+    <h1 class="page-title">@Model.Name &nbsp;&nbsp;&nbsp;<a href="/Note/AddNote/@Model.Id/Company"><button class="btn btn-primary"><i class="icon-plus"></i> Add Note</button></a>&nbsp;&nbsp;&nbsp;<a href="/Staff/AddStaff/@Model.Id"><button class="btn btn-primary"><i class="icon-plus"></i> Add Staff</button></a>&nbsp;&nbsp;&nbsp;<a href="/Candidate/AddCandidate/@Model.Id"><button class="btn btn-primary"><i class="icon-plus"></i> Add Candidate</button></a>&nbsp;&nbsp;&nbsp;<a href="/JobOrder/AddJobOrder/"><button class="btn btn-primary"><i class="icon-plus"></i> Add Job Order</button></a></h1>
+</div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <h3>@Model.Address</h3>
+        <h3>@Model.City @Model.State, @Model.Zip</h3>
+        <h3>@Model.Country</h3>
+        <br />
+        <h3>@Model.Phone</h3>
+        <h3>@Model.PhoneSecondary</h3>
+        <br />
+        <div class="well">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#staff" data-toggle="tab">Staff</a></li>
+                <li><a href="#candidates" data-toggle="tab">Candidates</a></li>
+                <li><a href="#jobs" data-toggle="tab">Jobs</a></li>
+                <li><a href="#notes" data-toggle="tab">Notes</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active in" id="staff">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Title</th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var staff in ViewBag.Staff)
+                            {
+                                <tr>
+                                    <td>@staff.LastName, @staff.FirstName</td>
+                                    <td>@staff.Title</td>
+                                    <td>
+                                        @if(staff.Email.Length > 0)
+                                        {
+                                            <a href="#"><i class="icon-envelope" title="Send Email" alt="Send Email"></i></a>
+                                        }
+                                    </td>
+                                    <td><a href="/Note/AddNote/@staff.Id/Staff"><i class="icon-comment" title="Add Note" alt="Add Note"></i></a></td>
+                                    <td><a href="/Staff/EditStaff/@staff.Id"><i class="icon-pencil"></i></a></td>
+                                    <td><a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="candidates">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Title</th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var cand in ViewBag.Candidates)
+                            {
+                                <tr>
+                                    
+                                    <td><a href="/Candidate/DisplayCandidate/@cand.Id">@cand.LastName, @cand.FirstName</a></td>
+                                    <td></td>
+                                    <td>
+                                        @if(cand.Email.Length > 0)
+                                        {
+                                            <a href="#"><i class="icon-envelope" title="Send Email" alt="Send Email"></i></a>
+                                        }
+                                    </td>
+                                    <td><a href="/Candidate/ViewResume/@cand.Id"><i class="icon-file" title="Resume" alt="Resume"></i></a></td>
+                                    <td><a href="/Note/AddNote/@cand.Id/Candidate"><i class="icon-comment" title="Add Note" alt="Add Note"></i></a></td>
+                                    <td><a href="/Candidate/EditCandidate/@cand.Id"><i class="icon-pencil"></i></a></td>
+                                    <td><a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="jobs">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var job in ViewBag.Jobs)
+                            {
+                                <tr>
+                                    <td><a href="/JobOrder/DisplayJobOrder/@job.Id">@job.PositionTitle</a></td>
+                                    <td><a href="/Note/AddNote/@job.Id/Job"><i class="icon-comment" title="Add Note" alt="Add Note"></i></a></td>
+                                    <td><a href="/JobOrder/EditJobOrder/@job.Id"><i class="icon-pencil"></i></a></td>
+                                    <td><a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="notes">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Note Text</th>
+                                <th style="width: 26px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var note in ViewBag.Notes)
+                            {
+                                <tr>
+                                    <td>@note.NoteDate.ToString("MM-dd-yyyy")</td>
+                                    @if(note.NoteText.Length <= 75)
+                                    {
+                                        <td>@note.NoteText</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@note.NoteText.Substring(0,75) ...</td>
+                                    }
+                                    <td>
+                                        <a href="/Note/EditNote/@note.Id"><i class="icon-pencil"></i></a>
+                                        <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "SearchCandidate";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<div class="header">
+    <h1 class="page-title">Search Candidates</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid" style="margin-top: 5%">
+        <div class="formlabel">Search Name:</div>
+        <div class="formfield"><input type="text" name="filter" value="@ViewBag.Filter" id="filter" /></div>
+        <div class="formlabel">&nbsp;</div>
+        <div class="formlabel">Search Description:</div>
+        <div class="formfield"><input type="text" name="descriptionFilter" value="@ViewBag.DescriptionFilter" id="descriptionFilter" />&nbsp;&nbsp;<a href="javascript:void(0);" id="FilterByDescription">Filter</a></div>
+        <div class="clear">&nbsp;</div>
+        <div id="companies" style="width: 100%">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td style="font-weight: bold;">Candidate Name:</td>
+                        <td width="13px;"></td>
+                        <td width="13px;"></td>
+                        <td width="13px;"></td>
+                        <td width="13px;"></td>
+                    </tr>
+                </thead>
+                @foreach (var cand in Model)
+                {
+                    <tr>
+                        <td><a href="/Candidate/DisplayCandidate/@cand.Id">@cand.LastName, @cand.FirstName</a></td>
+                        <td>
+                            @if(cand.Email.Length > 0)
+                            {
+                                <a href="#"><i class="icon-envelope" title="Send Email" alt="Send Email"></i></a>
+                            }
+                        </td>
+                        <td><a href="/Note/AddNote/@cand.Id/Candidate"><i class="icon-comment" title="Add Note" alt="Add Note"></i></a></td>
+                        <td><a href="/Candidate/EditCandidate/@cand.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a></td>
+                        <td><a href="/Candidate/DeleteCandidate/@cand.Id"><i class="icon-remove" title="Delete" alt="Delete"></i></a></td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="3">
+                        @if (ViewBag.PaginationStart > 1)
+                        {
+                            @:...&nbsp;&nbsp;
+                        }
+                        @for (var i = ViewBag.PaginationStart; i <= ViewBag.PaginationEnd; i++)
+                        {
+                            if(ViewBag.Filter == "")
+                            {
+                                <a href="/Candidate/SearchCandidate/@i/@ViewBag.Mode">@i &nbsp;&nbsp;&nbsp;</a>
+                            }
+                            else
+                            {
+                                if(ViewBag.Mode == 0)
+                                {
+                                    <a href="/Candidate/SearchCandidate/@i/@ViewBag.Mode/@ViewBag.Filter">@i &nbsp;&nbsp;&nbsp;</a>
+                                }
+                                else
+                                {
+                                    <a href="/Candidate/SearchCandidate/@i/@ViewBag.Mode/@ViewBag.DescriptionFilter">@i &nbsp;&nbsp;&nbsp;</a>
+                                }
+                            }
+                        }
+                        @if(ViewBag.PaginationEnd < ViewBag.NumPages)
+                        {
+                            @: ...
+                        }
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="filteringDialog" title="Filtering Results">
+            <p>Filtering ...</p>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#filter").keyup(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Candidate/NameFilter/1/0/" + $('#filter').val(),
+            success: function (result) { $('#companies').html(result); }
+        });
+    });
+
+    $('#FilterByDescription').on("click", filterCompanies);
+    $("#filteringDialog").dialog({
+        hide: 'slide',
+        show: 'slide',
+        autoOpen: false,
+        width: '400px',
+    });
+    function filterCompanies() {
+        $.ajax({
+            type: "POST",
+            url: "/Candidate/ResumeFilter/1/1/" + $('#descriptionFilter').val(),
+            beforeSend: function () {
+                $("#filteringDialog").dialog('open').html("<p>Please Wait...</p>");
+            },
+            success: function (result) { $('#companies').html(result); $('#filteringDialog').dialog('close'); }
+        });
+        
+    }
+</script>
