@@ -20,7 +20,7 @@ namespace KR.Domain.DataAccess
             insOffer.Parameters.AddWithValue("offerDate", m_Offer.OfferDate);
             insOffer.Parameters.AddWithValue("jobId", m_Offer.JobId);
             insOffer.Parameters.AddWithValue("offerText", m_Offer.OfferText);
-            insOffer.Parameters.AddWithValue("accepted", m_Offer.Accepted);
+            insOffer.Parameters.AddWithValue("accepted", 0);
             insOffer.Parameters.AddWithValue("startDate", m_Offer.StartDate);
             insOffer.Parameters.AddWithValue("candidateId", m_Offer.CandidateId);
 
@@ -39,7 +39,6 @@ namespace KR.Domain.DataAccess
             updOffer.Parameters.AddWithValue("offerDate", m_Offer.OfferDate);
             updOffer.Parameters.AddWithValue("jobId", m_Offer.JobId);
             updOffer.Parameters.AddWithValue("offerText", m_Offer.OfferText);
-            updOffer.Parameters.AddWithValue("accepted", m_Offer.Accepted);
             updOffer.Parameters.AddWithValue("startDate", m_Offer.StartDate);
             updOffer.Parameters.AddWithValue("candidateId", m_Offer.CandidateId);
             updOffer.Parameters.AddWithValue("id", m_Offer.Id);

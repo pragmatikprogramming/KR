@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using KR.Domain.Abstract;
 using KR.Domain.Entities;
+using KR.WebUI.Infrastructure;
 
 namespace KR.WebUI.Controllers
 {
@@ -21,14 +22,16 @@ namespace KR.WebUI.Controllers
             CompanyRepository = CompanyRepo;
             NoteRepository = NoteRepo;
             CandidateRepository = CandidateRepo;
+            ViewBag.Name = System.Web.HttpContext.Current.Session["Name"];
         }
 
-
+        [KRAuth]
         public ActionResult Index()
         {
             return View();
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult AddStaff(int id = 0)
         {
@@ -39,6 +42,7 @@ namespace KR.WebUI.Controllers
             return View("AddStaff", m_Staff);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult AddStaff(Staff m_Staff)
         {
@@ -54,6 +58,7 @@ namespace KR.WebUI.Controllers
             }
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult EditStaff(int id)
         {
@@ -63,6 +68,7 @@ namespace KR.WebUI.Controllers
             return View("EditStaff", m_Staff);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult EditStaff(Staff m_Staff)
         {
@@ -78,6 +84,7 @@ namespace KR.WebUI.Controllers
             }
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult DisplayStaff(int id)
         {
@@ -88,6 +95,7 @@ namespace KR.WebUI.Controllers
             return View("DisplayStaff", m_Staff);
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult MakeCand(int id)
         {
@@ -105,8 +113,8 @@ namespace KR.WebUI.Controllers
             return Redirect("/Companies/DisplayCompany/" + m_Staff.CompanyId);
         }
 
+        [KRAuth]
         [HttpGet]
-
         public ActionResult DeleteStaff( int id, int pageNum, int mode, string filter)
         {
             StaffRepository.DeleteStaff(id);
@@ -114,6 +122,7 @@ namespace KR.WebUI.Controllers
             return Redirect("/Staff/SearchStaff/" + pageNum + "/" + mode + "/" + filter);
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult SearchStaff(int pageNum, int mode, string filter)
         {
@@ -155,6 +164,7 @@ namespace KR.WebUI.Controllers
             return View("SearchStaff", m_Staff);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult DescriptionFilter(int pageNum, int mode, string filter)
         {
@@ -188,6 +198,7 @@ namespace KR.WebUI.Controllers
             return View("DescriptionFilter", m_Staff);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult FilterStaff(int pageNum, int mode, string filter)
         {

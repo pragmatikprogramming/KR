@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using KR.Domain.Abstract;
 using KR.Domain.Entities;
+using KR.WebUI.Infrastructure;
 
 namespace KR.Controllers
 {
@@ -12,13 +13,17 @@ namespace KR.Controllers
     {
         IInterviewRepository InterviewRepository;
         ICandidateRepository CandidateRepository;
+        IJobOrderRepository JobOrderRepository;
 
         public InterviewController(IInterviewRepository InterviewRepo, ICandidateRepository CandidateRepo, IJobOrderRepository JobOrderRepo)
         {
             InterviewRepository = InterviewRepo;
             CandidateRepository = CandidateRepo;
+            JobOrderRepository = JobOrderRepo;
+            ViewBag.Name = System.Web.HttpContext.Current.Session["Name"];
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult AddInterview(int id)
         {
@@ -29,6 +34,7 @@ namespace KR.Controllers
             return View("AddInterview");
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult AddInterview(Interview m_Interview)
         {
@@ -49,6 +55,38 @@ namespace KR.Controllers
  
         }
 
+        [KRAuth]
+        [HttpGet]
+        public ActionResult AddInterviewJO(int id)
+        {
+
+            ViewBag.Resumes = JobOrderRepository.ResumesSent(id);
+            ViewBag.JobId = id;
+
+            return View("AddInterviewJO");
+        }
+
+        [KRAuth]
+        [HttpPost]
+        public ActionResult AddInterviewJO(Interview m_Interview)
+        {
+            if (ModelState.IsValid)
+            {
+                InterviewRepository.AddInterview(m_Interview);
+
+                return Redirect("/JobOrder/DisplayJobOrder/" + m_Interview.JobId);
+            }
+            else
+            {
+                ViewBag.Resumes = JobOrderRepository.ResumesSent(m_Interview.JobId);
+                ViewBag.JobId = m_Interview.JobId;
+
+                return View("AddInterviewJO");
+            }
+
+        }
+
+        [KRAuth]
         [HttpGet]
         public ActionResult EditInterview(int id)
         {
@@ -58,6 +96,7 @@ namespace KR.Controllers
             return View("EditInterview", m_Interview);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult EditInterview(Interview m_Interview)
         {
@@ -76,6 +115,7 @@ namespace KR.Controllers
             }
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult DeleteInterview(int id)
         {

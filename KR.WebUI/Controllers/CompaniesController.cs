@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using KR.Domain.Abstract;
 using KR.Domain.Entities;
+using KR.WebUI.Infrastructure;
 
 namespace KR.WebUI.Controllers
 {
@@ -23,13 +24,16 @@ namespace KR.WebUI.Controllers
             CandidateRepository = CandidateRepo;
             JobOrderRepository = JobOrderRepo;
             NoteRepository = NoteRepo;
+            ViewBag.Name = System.Web.HttpContext.Current.Session["Name"];
         }
 
+        [KRAuth]
         public ActionResult Index()
         {
             return View();
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult AddCompany()
         {
@@ -38,6 +42,7 @@ namespace KR.WebUI.Controllers
             return View("AddCompany", m_Company);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult AddCompany(Companies m_Company)
         {
@@ -53,6 +58,7 @@ namespace KR.WebUI.Controllers
             }
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult EditCompany(int id)
         {
@@ -61,6 +67,7 @@ namespace KR.WebUI.Controllers
             return View("EditCompany", m_Company);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult EditCompany(Companies m_Company)
         {
@@ -76,6 +83,7 @@ namespace KR.WebUI.Controllers
             }
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult SearchCompany(int pageNum, int mode, string filter)
         {
@@ -117,6 +125,7 @@ namespace KR.WebUI.Controllers
             return View("SearchCompany", m_Companies);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult DescriptionFilter(int pageNum, int mode, string filter)
         {
@@ -151,6 +160,7 @@ namespace KR.WebUI.Controllers
             return View("DescriptionFilter", m_Companies);
         }
         
+        [KRAuth]
         [HttpPost]
         public ActionResult FilterCompanies(int pageNum, int mode, string filter)
         {
@@ -185,6 +195,7 @@ namespace KR.WebUI.Controllers
             return View("FilterCompanies", m_Companies);
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult DisplayCompany(int id)
         {

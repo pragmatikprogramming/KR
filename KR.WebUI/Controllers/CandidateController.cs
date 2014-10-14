@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 using KR.Domain.Abstract;
 using KR.Domain.Entities;
+using KR.WebUI.Infrastructure;
 
 namespace KR.WebUI.Controllers
 {
@@ -14,20 +16,25 @@ namespace KR.WebUI.Controllers
         ICompanyRepository CompanyRepository;
         IOfferRepository OfferRepository;
         IJobOrderRepository JobOrderRepository;
+        IPlacementsRepository PlacementRepository;
 
-        public CandidateController(ICandidateRepository CandidateRepo, ICompanyRepository CompanyRepo, IOfferRepository OfferRepo, IJobOrderRepository JobOrderRepo)
+        public CandidateController(ICandidateRepository CandidateRepo, ICompanyRepository CompanyRepo, IOfferRepository OfferRepo, IJobOrderRepository JobOrderRepo, IPlacementsRepository PlacementRepo)
         {
             CandidateRepository = CandidateRepo;
             CompanyRepository = CompanyRepo;
             OfferRepository = OfferRepo;
             JobOrderRepository = JobOrderRepo;
+            PlacementRepository = PlacementRepo;
+            ViewBag.Name = System.Web.HttpContext.Current.Session["Name"];
         }
 
+        [KRAuth]
         public ActionResult Index()
         {
             return View();
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult AddCandidate(int id = 0)
         {
@@ -37,6 +44,7 @@ namespace KR.WebUI.Controllers
             return View("AddCandidate", m_Cand);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult AddCandidate(Candidate m_Cand, HttpPostedFileBase fileUpload)
         {
@@ -52,6 +60,7 @@ namespace KR.WebUI.Controllers
             }
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult EditCandidate(int id)
         {
@@ -60,6 +69,7 @@ namespace KR.WebUI.Controllers
             return View("EditCandidate", m_Cand);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult EditCandidate(Candidate m_Cand)
         {
@@ -76,14 +86,16 @@ namespace KR.WebUI.Controllers
 
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult DeleteCandidate(int id)
         {
             CandidateRepository.DeleteCandidate(id);
 
-            return RedirectToAction("/SearchCandidate/");
+            return Redirect(System.Web.HttpContext.Current.Request.UrlReferrer.ToString());
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult SearchCandidate(int pageNum, int mode, string filter)
         {
@@ -126,7 +138,7 @@ namespace KR.WebUI.Controllers
             return View("SearchCandidate", m_Candidates);
         }
 
-
+        [KRAuth]
         public ActionResult ResumeFilter(int pageNum, int mode, string filter)
         {
             List<Candidate> m_Candidates = CandidateRepository.Pagination(pageNum, mode, filter);
@@ -159,7 +171,7 @@ namespace KR.WebUI.Controllers
             return View("ResumeFilter", m_Candidates);
         }
 
-
+        [KRAuth]
         public ActionResult NameFilter(int pageNum, int mode, string filter)
         {
             List<Candidate> m_Candidates = CandidateRepository.Pagination(pageNum, mode, filter);
@@ -193,6 +205,7 @@ namespace KR.WebUI.Controllers
             return View("NameFilter", m_Candidates);
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult SendResume(int id)
         {
@@ -202,6 +215,7 @@ namespace KR.WebUI.Controllers
             return View("SendResume", m_Cand);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult SendResume(int Id, int JobOrderId, string EmailText)
         {
@@ -210,6 +224,7 @@ namespace KR.WebUI.Controllers
             return RedirectToAction("/DisplayCandidate/" + Id);
         }
 
+        [KRAuth]
         public ActionResult DisplayCandidate(int id)
         {
             Candidate m_Cand = CandidateRepository.RetrieveOne(id);
@@ -222,6 +237,7 @@ namespace KR.WebUI.Controllers
             return View("DisplayCandidate", m_Cand);
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult UploadResume(int id)
         {
@@ -230,6 +246,7 @@ namespace KR.WebUI.Controllers
             return View("UploadResume");
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult UploadResume(int id, HttpPostedFileBase candResume)
         {
@@ -262,6 +279,7 @@ namespace KR.WebUI.Controllers
             }
         }
 
+        [KRAuth]
         [HttpGet]
         public FileResult ViewResume(int id)
         {
@@ -291,5 +309,38 @@ namespace KR.WebUI.Controllers
             //return new FileContentResult(CandidateRepository.ViewResume(id), "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
         }
 
+        [KRAuth]
+        [HttpGet]
+        public ActionResult AddPlacement(int id)
+        {
+            List<Offer> m_Offers = OfferRepository.RetrieveAllCand(id);
+            ViewBag.CandidateId = id;
+            ViewBag.Placement = new Placement();
+            return View("AddPlacement", m_Offers);
+        }
+
+        [KRAuth]
+        [HttpPost]
+        public ActionResult AddPlacement(Placement m_Placement)
+        {
+            if (!ModelState.IsValid)
+            {
+                m_Placement.PaidDate = DateTime.MaxValue;
+                ModelState.Remove("PaidDate");
+            }
+
+            if (ModelState.IsValid)
+            {
+                PlacementRepository.AddPlacement(m_Placement);
+                return Redirect("/Candidate/DisplayCandidate/" + m_Placement.CandidateId);
+            }
+            else
+            {
+                List<Offer> m_Offers = OfferRepository.RetrieveAllCand(m_Placement.CandidateId);
+                ViewBag.Id = m_Placement.CandidateId;
+                ViewBag.Placement = m_Placement;
+                return View("AddPlacement", m_Offers);
+            }
+        }
     }
 }

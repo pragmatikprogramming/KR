@@ -64,5 +64,11 @@ namespace KR.Domain.Models
         {
             DBJobOrder.SendResume(m_Resume);
         }
+
+        public List<JobOrder> GetPlacements()
+        {
+            List<JobOrder> m_Jobs = DBJobOrder.GetPlacements();
+            return m_Jobs;
+        }
     }
 }

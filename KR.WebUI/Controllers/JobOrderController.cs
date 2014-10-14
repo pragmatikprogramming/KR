@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using KR.Domain.Abstract;
 using KR.Domain.Entities;
+using KR.WebUI.Infrastructure;
 
 namespace KR.WebUI.Controllers
 {
@@ -15,21 +16,27 @@ namespace KR.WebUI.Controllers
         IOfferRepository OfferRepository;
         INoteRepository NoteRepository;
         ICandidateRepository CandidateRepository;
+        IPlacementsRepository PlacementRepository;
 
-        public JobOrderController(IJobOrderRepository JobOrderRepo, ICompanyRepository CompanyRepo, IOfferRepository OfferRepo, INoteRepository NoteRepo, ICandidateRepository CandidateRepo)
+        public JobOrderController(IJobOrderRepository JobOrderRepo, ICompanyRepository CompanyRepo, IOfferRepository OfferRepo, INoteRepository NoteRepo, ICandidateRepository CandidateRepo, IPlacementsRepository PlacementRepo)
         {
             JobOrderRepository = JobOrderRepo;
             CompanyRepository = CompanyRepo;
             OfferRepository = OfferRepo;
             NoteRepository = NoteRepo;
             CandidateRepository = CandidateRepo;
+            PlacementRepository = PlacementRepo;
+            ViewBag.Name = System.Web.HttpContext.Current.Session["Name"];
         }
 
+
+        [KRAuth]
         public ActionResult Index()
         {
             return View();
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult AddJobOrder()
         {
@@ -39,6 +46,7 @@ namespace KR.WebUI.Controllers
             return View("AddJobOrder", m_JobOrder);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult AddJobOrder(JobOrder m_JobOrder, string ContactSelect)
         {
@@ -59,6 +67,7 @@ namespace KR.WebUI.Controllers
             }
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult EditJobOrder(int id)
         {
@@ -69,6 +78,7 @@ namespace KR.WebUI.Controllers
             return View("EditJobOrder", m_JobOrder);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult EditJobOrder(JobOrder m_JobOrder, string ContactSelect)
         {
@@ -90,6 +100,7 @@ namespace KR.WebUI.Controllers
             
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult updateContactSelect(int id)
         {
@@ -97,6 +108,7 @@ namespace KR.WebUI.Controllers
             return View("upDateContactSelect");
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult DisplayJobOrder(int id)
         {
@@ -110,6 +122,7 @@ namespace KR.WebUI.Controllers
             return View("DisplayJobOrder", m_JobOrder);
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult DeleteNote(int id)
         {
@@ -119,6 +132,7 @@ namespace KR.WebUI.Controllers
             return RedirectToAction("/DisplayJobOrder/" + m_Note.RelatedTypeId);
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult SendResume(int id)
         {
@@ -129,6 +143,7 @@ namespace KR.WebUI.Controllers
             return View("SendResume", m_Job);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult SendResume(Resume m_Resume)
         {
@@ -139,5 +154,46 @@ namespace KR.WebUI.Controllers
             return RedirectToAction("/DisplayJobOrder/" + m_Resume.JobId);
         }
 
+
+        [KRAuth]
+        [HttpGet]
+        public ActionResult Placements()
+        {
+            List<JobOrder> m_Jobs = JobOrderRepository.GetPlacements();
+            
+            return View("Placements", m_Jobs);
+        }
+
+        [KRAuth]
+        [HttpGet]
+        public ActionResult AddPlacement(int id)
+        {
+            List<Offer> m_Offers = OfferRepository.RetrieveAllJob(id);
+            ViewBag.JobId = id;
+            return View("AddPlacement", m_Offers);
+        }
+
+        [KRAuth]
+        [HttpPost]
+        public ActionResult AddPlacement(Placement m_Placement)
+        {
+            if (!ModelState.IsValid)
+            {
+                m_Placement.PaidDate = DateTime.MaxValue;
+                ModelState.Remove("PaidDate");
+            }
+
+            if (ModelState.IsValid)
+            {
+                PlacementRepository.AddPlacement(m_Placement);
+                return Redirect("/JobOrder/DisplayJobOrder/" + m_Placement.JobId);
+            }
+            else
+            {
+                List<Offer> m_Offers = OfferRepository.RetrieveAllJob(m_Placement.JobId);
+                ViewBag.JobId = m_Placement.JobId;
+                return View("AddPlacement", m_Offers);
+            }
+        }
     }
 }

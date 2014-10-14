@@ -133,9 +133,11 @@
     <Compile Include="Controllers\NoteController.cs" />
     <Compile Include="Controllers\OfferController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\KRAuthAttribute.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -236,6 +238,16 @@
     <Content Include="Views\Candidate\SendResume.cshtml" />
     <Content Include="Views\Offer\EditOffer.cshtml" />
     <Content Include="Views\JobOrder\SendResume.cshtml" />
+    <Content Include="Views\Interview\AddInterviewJO.cshtml" />
+    <Content Include="Views\Shared\Login.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Manage.cshtml" />
+    <Content Include="Views\User\UserAdd.cshtml" />
+    <None Include="Properties\PublishProfiles\sebelledb - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\sebelledb - Web Deploy.pubxml" />
+    <Content Include="Views\JobOrder\Placements.cshtml" />
+    <Content Include="Views\Candidate\AddPlacement.cshtml" />
+    <Content Include="Views\JobOrder\AddPlacement.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

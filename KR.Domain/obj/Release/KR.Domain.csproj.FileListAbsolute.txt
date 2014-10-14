@@ -26,3 +26,31 @@ C:\Users\jwigginton\Documents\Visual Studio 2012\Projects\KR\KR.Domain\bin\Syste
 C:\Users\jwigginton\Documents\Visual Studio 2012\Projects\KR\KR.Domain\obj\Release\KR.Domain.csprojResolveAssemblyReference.cache
 C:\Users\jwigginton\Documents\Visual Studio 2012\Projects\KR\KR.Domain\obj\Release\KR.Domain.dll
 C:\Users\jwigginton\Documents\Visual Studio 2012\Projects\KR\KR.Domain\obj\Release\KR.Domain.pdb
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\KR.Domain.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\KR.Domain.pdb
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\Bytescout.Document.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\Newtonsoft.Json.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Net.Http.Formatting.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.Helpers.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.Http.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.Http.WebHost.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.Mvc.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.Razor.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.WebPages.Deployment.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.WebPages.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.WebPages.Razor.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\Newtonsoft.Json.xml
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Net.Http.Formatting.xml
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.Helpers.xml
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.Http.xml
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.Http.WebHost.xml
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.Mvc.xml
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.Razor.xml
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.WebPages.xml
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.WebPages.Deployment.xml
+C:\Users\jwigginton\Desktop\KR\KR.Domain\bin\System.Web.WebPages.Razor.xml
+C:\Users\jwigginton\Desktop\KR\KR.Domain\obj\Release\KR.Domain.csprojResolveAssemblyReference.cache
+C:\Users\jwigginton\Desktop\KR\KR.Domain\obj\Release\KR.Domain.dll
+C:\Users\jwigginton\Desktop\KR\KR.Domain\obj\Release\KR.Domain.pdb

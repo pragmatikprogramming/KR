@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Add Interview";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#InterviewDate").datepicker();
+    });
+
+</script>
+
+<div class="header">
+    <h1 class="page-title">Add Interview</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid" style="margin-top: 5%">
+        <form method="post" action="/Interview/AddInterview" id="AddInterview" name="AddInterview">
+            <input type="hidden" name="CandidateId" value="@ViewBag.CandId" id="CandidateId" />
+            <div class="formlabel">Job</div>
+            <div class="formfield">
+                <select name="JobId">
+                    @foreach (var resume in ViewBag.Resumes)
+                    {
+                            <option value="@resume.JobId">@resume.JobName</option>
+                    }
+                </select>
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Date:</div>
+            <div class="formfield"><input type="text" name="InterviewDate" id="InterviewDate" value="" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Type:</div>
+            <div class="formfield">
+                <select name="InterviewType">
+                    <option value="Phone">Phone</option>
+                    <option value="In Person">In Person</option>
+                </select>
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">&nbsp;</div>
+            <div class="formfield"><button form="AddInterview" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+            <div class="clear">&nbsp;</div>
+        </form>
+    </div>
+</div>

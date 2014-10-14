@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "AddPlacement";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#StartDate").datepicker();
+    });
+    $(function () {
+        $("#InvoiceDate").datepicker();
+    });
+    $(function () {
+        $("#PaidDate").datepicker();
+    });
+</script>
+
+@if (Model.Count == 0)
+{
+    <div class="header">
+        <h1 class="page-title">This Job Has no Offers, thus, a placement cannot be added</h1>
+    </div>
+}
+else
+{
+    <div class="header">
+        <h1 class="page-title">Add Placement</h1>
+    </div>
+
+    <div style="line-height: 30px;">&nbsp;</div>
+    <div style="color: red">@Html.ValidationSummary()</div>
+    
+    <div class="container-fluid">
+        <div class="row-fluid" style="margin-top: 5%">
+            <form method="post" action="/JobOrder/AddPlacement" id="AddPlacement" name="AddPlacement" >
+                <input type="hidden" name="JobId" value="@ViewBag.Jobid" id="JobId"/>
+                <div class="formlabel">Candidate:</div>
+                <div class="formfield">
+                    <select name="CandidateId">
+                    @foreach (var job in Model)
+                    {
+                        <option value="@job.CandidateId">@job.CandidateName</option>
+                    }
+                    </select>
+                </div>
+                <div class="clear">&nbsp;</div>
+
+                <div class="formlabel">Start Date:</div>
+                <div class="formfield"><input type="text" name="StartDate" id="StartDate" value="" /></div>
+                <div class="clear">&nbsp;</div>
+
+                <div class="formlabel">Salary:</div>
+                <div class="formfield"><input type="text" name="Salary" id="Salary" value="" /></div>
+                <div class="clear">&nbsp;</div>
+
+                <div class="formlabel">Invoice Date:</div>
+                <div class="formfield"><input type="text" name="InvoiceDate" id="InvoiceDate" value="" /></div>
+                <div class="clear">&nbsp;</div>
+
+                <div class="formlabel">Paid Date:</div>
+                <div class="formfield"><input type="text" name="PaidDate" id="PaidDate" value="" /></div>
+                <div class="clear">&nbsp;</div>
+
+                <div class="formlabel">&nbsp;</div>
+                <div class="formfield"><button form="AddPlacement" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+                <div class="clear">&nbsp;</div>
+            </form>
+        </div>
+    </div>
+}

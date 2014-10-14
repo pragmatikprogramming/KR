@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Add JobOrder";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#DateAquired").datepicker();
+    });
+
+</script>
+
+<div class="header">
+    <h1 class="page-title">Add Job Order</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid" style="margin-top: 5%">
+
+        <div style="line-height: 30px;">&nbsp;</div>
+        <div style="color: red">@Html.ValidationSummary()</div>
+
+        <form method="post" action="/JobOrder/AddJobOrder" id="AddJobOrder" name="AddJobOrder" >
+            <div class="formlabel">Aquired:</div>
+            <div class="formfield"><input type="text" name="DateAquired" id="DateAquired" value="@Model.DateAquired.ToString("MM-dd-yyyy")" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Company:</div>
+            <div class="formfield">
+                @Html.DropDownList("CompanyId", "-- Select a Company --")
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div id="ContactSelect">
+                <div class="formlabel">Contact:</div>
+                <div class="formfield">
+                    <select name="ContactSelect">
+                        <option id="0">-- Select a Company First --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Position:</div>
+            <div class="formfield"><input type="text" name="PositionTitle" id="PositionTitle" value="@Model.PositionTitle" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Salary:</div>
+            <div class="formfield"><input type="text" name="Salary" id="Salary" value="@Model.Salary" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Fee:</div>
+            <div class="formfield"><input type="text" name="RecruitmentFee" id="RecruitmentFee" value="@Model.RecruitmentFee" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Website:</div>
+            <div class="formfield">
+                <select name="DisplayOnWebsite">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Education:</div>
+            <div class="formfield"><textarea name="Education" id="Education" rows="5" cols="25">@Model.Education</textarea></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Requirements:</div>
+            <div class="formfield"><textarea name="Requirements" id="Requirements" rows="5" cols="25">@Model.Requirements</textarea></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Duties:</div>
+            <div class="formfield"><textarea name="Duties" id="Duties" rows="5" cols="25">@Model.Duties</textarea></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Key Words:</div>
+            <div class="formfield"><textarea name="Keywords" id="Keywords" rows="5" cols="25">@Model.KeyWords</textarea></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">&nbsp;</div>
+            <div class="formfield"><button form="AddJobOrder" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+            <div class="clear">&nbsp;</div>
+
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#CompanyId").change(function () {
+        //alert("It changed");
+        $.ajax({
+            type: "POST",
+            url: "/JobOrder/upDateContactSelect/" + $('#CompanyId').val(),
+            success: function (result) { $('#ContactSelect').html(result); }
+        });
+    });
+</script>

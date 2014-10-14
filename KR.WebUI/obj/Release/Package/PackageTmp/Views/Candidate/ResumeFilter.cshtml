@@ -1,0 +1,42 @@
+﻿<table class="table">
+    <thead>
+        <tr>
+            <td style="font-weight: bold;">Company Name:</td>
+            <td width="13px;"></td>
+            <td width="13px;"></td>
+            <td width="13px;"></td>
+            <td width="13px;"></td>
+        </tr>
+    </thead>
+    @foreach (var cand in Model)
+    {
+        <tr id="compList" style width="100%">
+            <td><a href="/Candidate/DisplayCandidate/@cand.Id">@cand.LastName, @cand.FirstName</a></td>
+            <td>
+                @if(cand.Email.Length > 0)
+                {
+                    <a href="#"><i class="icon-envelope" title="Send Email" alt="Send Email"></i></a>
+                }
+            </td>
+            <td><a href="/Note/AddNote/@cand.Id/Candidate"><i class="icon-comment" title="Add Note" alt="Add Note"></i></a></td>
+            <td><a href="/Candidate/EditCandidate/@cand.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a></td>
+            <td><a href="/Candidate/DeleteCandidate/@cand.Id"><i class="icon-remove" title="Delete" alt="Delete"></i></a></td>
+        </tr>
+    }
+    <tr>
+        <td colspan="3">
+        @if (ViewBag.PaginationStart > 1)
+        {
+            @:...&nbsp;&nbsp;
+        }
+        @for (var i = ViewBag.PaginationStart; i <= ViewBag.PaginationEnd; i++)
+        {
+            <a href="/Candidate/SearchCandidate/@i/1/@ViewBag.DescriptionFilter">@i &nbsp;&nbsp;&nbsp;</a>
+        }
+        @if(ViewBag.PaginationEnd < ViewBag.NumPages)
+        {
+            @: ...
+        }
+        </td>
+    </tr>
+</table>

@@ -49,6 +49,11 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <style type="text/css">
+        .ui-dialog-titlebar-close {
+            visibility: hidden;
+        }
+    </style>
   </head>
 
   <!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
@@ -66,7 +71,7 @@
                     
                     <li id="fat-menu" class="dropdown">
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-user"></i>Ed Bertolas
+                            <i class="icon-user"></i>@ViewBag.Name
                             <i class="icon-caret-down"></i>
                         </a>
 
@@ -75,7 +80,7 @@
                             <li class="divider"></li>
                             <li><a tabindex="-1" class="visible-phone" href="#">Settings</a></li>
                             <li class="divider visible-phone"></li>
-                            <li><a tabindex="-1" href="sign-in.html">Logout</a></li>
+                            <li><a tabindex="-1" href="/Home/Logout">Logout</a></li>
                         </ul>
                     </li>
                     
@@ -88,32 +93,29 @@
 
     
     <div class="sidebar-nav">
-        <a href="#administration-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>Staff</a>
+        <a href="#administration-menu" class="nav-header" data-toggle="collapse"><i class="icon-user"></i>Staff</a>
         <ul id="administration-menu" class="nav nav-list collapse in">
-            <li ><a href="index.html">Add Staff</a></li>
-            <li ><a href="index.html">Delete Staff</a></li>
-            <li ><a href="index.html">Search Staff</a></li>
+            <li ><a href="/Staff/AddStaff">Add Staff</a></li>
+            <li ><a href="/Staff/SearchStaff">Search Staff</a></li>
         </ul>
 
         <a href="#components-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Candidates</a>
         <ul id="components-menu" class="nav nav-list collapse">
-            <li ><a href="index.html">Add Candidates</a></li>
-            <li ><a href="index.html">Delete Candidates</a></li>
-            <li ><a href="index.html">Search Candidates</a></li>
+            <li ><a href="/Candidate/AddCandidate">Add Candidates</a></li>
+            <li ><a href="/Candidate/SearchCandidate">Search Candidates</a></li>
         </ul>
 
-        <a href="#help-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>Companies</a>
+        <a href="#help-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-cog"></i>Companies</a>
         <ul id="help-menu" class="nav nav-list collapse">
-            <li ><a href="403.html">Add Company</a></li>
-            <li ><a href="404.html">Delete Company</a></li>
-            <li ><a href="500.html">Search Company</a></li>
+            <li ><a href="/Companies/AddCompany">Add Company</a></li>
+            <li ><a href="/Companies/SearchCompany">Search Company</a></li>
         </ul>
-	<a href="#job-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>Job Orders</a>
+	<a href="#job-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-inbox"></i>Job Orders</a>
         <ul id="job-menu" class="nav nav-list collapse">
-            <li ><a href="">Add Job</a></li>
-            <li ><a href="">Delete Job</a></li>
+            <li ><a href="/JobOrder/AddJobOrder">Add Job</a></li>
             <li ><a href="">Search Jobs</a></li>
         </ul>
+    <a href="/JobOrder/Placements" class="nav-header collapsed" ><i class="icon-money"></i>Placements</a>
     </div>
     
 

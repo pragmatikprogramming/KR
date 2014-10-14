@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Display Staff";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<style type="text/css">
+    h3 {
+        line-height: 14px;
+    }
+</style>
+<div class="header">
+    <h1 class="page-title">@Model.LastName, @Model.FirstName &nbsp;&nbsp;&nbsp;<a href="/Note/AddNote/@Model.Id/Staff"><button class="btn btn-primary"><i class="icon-plus"></i> Add Note</button></a>&nbsp;&nbsp;&nbsp;<a href=""><button class="btn btn-primary"><i class="icon-plus"></i> Send Email</button></a>&nbsp;&nbsp;&nbsp;<a href="/Staff/MakeCand/@Model.Id"><button class="btn btn-primary"><i class="icon-plus"></i> Make Candidate</button></a>&nbsp;&nbsp;&nbsp;<a href="/Staff/DeleteStaff/@Model.Id/1/0/"><button class="btn btn-primary"><i class="icon-plus"></i> Delete</button></a></h1>
+</div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <h3>@ViewBag.Company.Name</h3>
+        <h3>@Model.Title</h3>
+        <br />
+        <div class="well">
+            <ul class="nav nav-tabs">
+                <li><a href="#note" data-toggle="tab">Notes</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active in" id="note">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Note Text</th>
+                                <th style="width: 13px;"></th>
+                                <th style="width: 13px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var note in ViewBag.Notes)
+                            {
+                                <tr>
+                                    <td>@note.NoteDate.ToString("MM-dd-yyyy")</td>
+                                    @if(note.NoteText.Length <= 75)
+                                    {
+                                        <td>@note.NoteText</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@note.NoteText.Substring(0,75) ...</td>
+                                    }
+                                    <td><a href="/Note/EditNote/@note.Id"><i class="icon-pencil"></i></a></td>
+                                    <td><a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

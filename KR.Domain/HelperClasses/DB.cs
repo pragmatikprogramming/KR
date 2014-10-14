@@ -18,7 +18,7 @@ namespace KR.Domain.HelperClasses
 
         public static SqlConnection DbWriteOnlyConnect()
         {
-            SqlConnection conn = new SqlConnection("Data Source=" + ConfigurationManager.AppSettings["DBServer"] + ";Initial Catalog=" + ConfigurationManager.AppSettings["DBName"] + ";User ID=" + ConfigurationManager.AppSettings["DBRWUser"] + ";Password=" + ConfigurationManager.AppSettings["DBRWPass"]);
+            SqlConnection conn = new SqlConnection("Data Source=" + ConfigurationManager.AppSettings["DBServer"] + ";Initial Catalog=" + ConfigurationManager.AppSettings["DBName"] + ";User ID=" + ConfigurationManager.AppSettings["DBROUser"] + ";Password=" + ConfigurationManager.AppSettings["DBROPass"]);
 
             return conn;
         }

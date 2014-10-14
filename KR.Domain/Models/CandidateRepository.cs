@@ -102,7 +102,7 @@ namespace KR.Domain.Models
 
             if (fileUpload != null && fileUpload.ContentLength > 0)
             {
-                string path = HttpContext.Current.Server.MapPath("/uploads");
+                string path = HttpContext.Current.Server.MapPath("/");
                 fileUpload.SaveAs(path + "\\" + fileUpload.FileName);
 
                 if (fileType == "doc" || fileType == "docx")

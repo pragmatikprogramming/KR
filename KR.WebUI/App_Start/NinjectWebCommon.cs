@@ -70,6 +70,8 @@ namespace KR.App_Start
             kernel.Bind<INoteRepository>().To<NoteRepository>();
             kernel.Bind<IInterviewRepository>().To<InterviewRepository>();
             kernel.Bind<IOfferRepository>().To<OfferRepository>();
+            kernel.Bind<IUserRepository>().To<UserRepository>();
+            kernel.Bind<IPlacementsRepository>().To<PlacementRepository>();
         }        
     }
 }

@@ -116,15 +116,19 @@
     <Compile Include="Abstract\IInterviewRepository.cs" />
     <Compile Include="Abstract\IJobOrderRepository.cs" />
     <Compile Include="Abstract\IOfferRepository.cs" />
+    <Compile Include="Abstract\IPlacementsRepository.cs" />
     <Compile Include="Abstract\IStaffRepository.cs" />
     <Compile Include="Abstract\INoteRepository.cs" />
+    <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="DataAccess\DBCandidate.cs" />
     <Compile Include="DataAccess\DBCompany.cs" />
     <Compile Include="DataAccess\DBInterview.cs" />
     <Compile Include="DataAccess\DBJobOrder.cs" />
     <Compile Include="DataAccess\DBNote.cs" />
     <Compile Include="DataAccess\DBOffer.cs" />
+    <Compile Include="DataAccess\DBPlacement.cs" />
     <Compile Include="DataAccess\DBStaff.cs" />
+    <Compile Include="DataAccess\DBUser.cs" />
     <Compile Include="Entities\Candidate.cs" />
     <Compile Include="Entities\Companies.cs" />
     <Compile Include="Entities\CompanyType.cs" />
@@ -132,20 +136,26 @@
     <Compile Include="Entities\JobOrder.cs" />
     <Compile Include="Entities\Note.cs" />
     <Compile Include="Entities\Offer.cs" />
+    <Compile Include="Entities\Placement.cs" />
     <Compile Include="Entities\Resume.cs" />
     <Compile Include="Entities\Staff.cs" />
+    <Compile Include="Entities\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\BCrypt.cs" />
     <Compile Include="HelperClasses\DB.cs" />
     <Compile Include="HelperClasses\GlobalDataTypes.cs" />
+    <Compile Include="HelperClasses\SessionHandler.cs" />
     <Compile Include="Models\CandidateRepository.cs" />
     <Compile Include="Models\CompanyRepository.cs" />
     <Compile Include="Models\InterviewRepository.cs" />
     <Compile Include="Models\JobOrderRepository.cs" />
     <Compile Include="Models\NoteRepository.cs" />
     <Compile Include="Models\OfferRepository.cs" />
+    <Compile Include="Models\PlacementRepository.cs" />
     <Compile Include="Models\StaffRepository.cs" />
+    <Compile Include="Models\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -186,7 +196,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>39513</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:13861/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

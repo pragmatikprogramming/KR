@@ -18,7 +18,13 @@ namespace KR.Domain.Entities
         private DateTime resumeLastUpdate;
         private byte[] resumeBinary;
         private int companyId;
+        private string companyName;
+
+        
         private string fileType;
+        private int isPlaced;
+
+        
 
 
 
@@ -157,6 +163,18 @@ namespace KR.Domain.Entities
             }
         }
 
+        public string CompanyName
+        {
+            get 
+            { 
+                return companyName; 
+            }
+            set 
+            { 
+                companyName = value; 
+            }
+        }
+
         public string FileType
         {
             get 
@@ -166,6 +184,18 @@ namespace KR.Domain.Entities
             set 
             { 
                 fileType = value; 
+            }
+        }
+
+        public int IsPlaced
+        {
+            get 
+            { 
+                return isPlaced; 
+            }
+            set 
+            { 
+                isPlaced = value; 
             }
         }
     }

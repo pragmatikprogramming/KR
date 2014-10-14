@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using KR.Domain.Abstract;
 using KR.Domain.Models;
 using KR.Domain.Entities;
+using KR.WebUI.Infrastructure;
 
 namespace KR.Controllers
 {
@@ -18,6 +19,7 @@ namespace KR.Controllers
             NoteRepository = NoteRepo;
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult AddNote(int id, string noteType)
         {
@@ -25,8 +27,10 @@ namespace KR.Controllers
             ViewBag.RelatedTypeId = id;
             ViewBag.NoteType = noteType;
             return View("AddNote", m_Note);
+            ViewBag.Name = System.Web.HttpContext.Current.Session["Name"];
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult AddNote(Note m_Note)
         {
@@ -63,6 +67,7 @@ namespace KR.Controllers
             }
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult EditNote(int id)
         {
@@ -71,6 +76,7 @@ namespace KR.Controllers
             return View("EditNote", m_Note);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult EditNote(Note m_Note)
         {

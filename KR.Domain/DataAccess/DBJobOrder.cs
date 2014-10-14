@@ -273,7 +273,7 @@ namespace KR.Domain.DataAccess
             SqlConnection conn = DB.DbWriteOnlyConnect();
             conn.Open();
 
-            string queryString = "INSERT INTO CRM_ResumesSent(candidateId, jobId, dateSent) VALUES(@candidateId, @jobId, @dateSent)";
+            string queryString = "INSERT INTO CRM_ResumesSent(candidateId, jobId, sentDate) VALUES(@candidateId, @jobId, @dateSent)";
             SqlCommand insRS = new SqlCommand(queryString, conn);
             insRS.Parameters.AddWithValue("candidateId", m_Resume.CandidateId);
             insRS.Parameters.AddWithValue("jobId", m_Resume.JobId);
@@ -281,6 +281,47 @@ namespace KR.Domain.DataAccess
             insRS.ExecuteNonQuery();
 
             conn.Close();
+        }
+
+        public static List<JobOrder> GetPlacements()
+        {
+            SqlConnection conn = DB.DbWriteOnlyConnect();
+            conn.Open();
+
+            string queryString = "SELECT * FROM CRM_JobOrders j, CRM_Placements p WHERE j.id = p.jobId ORDER BY p.startDate DESC";
+            SqlCommand getPlacements = new SqlCommand(queryString, conn);
+            SqlDataReader jobsReader = getPlacements.ExecuteReader();
+
+            List<JobOrder> m_Jobs = new List<JobOrder>();
+
+            while (jobsReader.Read())
+            {
+                JobOrder m_Job = new JobOrder();
+                m_Job.Id = jobsReader.GetInt32(0);
+                m_Job.DateAquired = jobsReader.GetDateTime(1);
+                m_Job.CompanyId = jobsReader.GetInt32(2);
+                m_Job.PositionTitle = jobsReader.GetString(3);
+                m_Job.Salary = jobsReader.GetInt32(22);
+                m_Job.Education = jobsReader.GetString(5);
+                m_Job.RecruitmentFee = jobsReader.GetInt32(6);
+                if (!jobsReader.IsDBNull(19))
+                {
+                    m_Job.DatePlaced = jobsReader.GetDateTime(19);
+                }
+                m_Job.KeyWords = jobsReader.GetString(9);
+                m_Job.Requirements = jobsReader.GetString(10);
+                m_Job.Duties = jobsReader.GetString(11);
+                m_Job.ContactId = jobsReader.GetInt32(12);
+                m_Job.ContactType = jobsReader.GetString(13);
+
+                Companies m_Comp = DBCompany.RetrieveOne(m_Job.CompanyId);
+                m_Job.CompanyName = m_Comp.Name;
+
+                m_Jobs.Add(m_Job);
+            }
+
+            conn.Close();
+            return m_Jobs;
         }
         
     }

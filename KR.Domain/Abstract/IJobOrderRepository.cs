@@ -19,5 +19,6 @@ namespace KR.Domain.Abstract
         List<Note> GetNotes(int id);
         List<Interview> GetInterviews(int id);
         void SendResume(Resume m_Resume);
+        List<JobOrder> GetPlacements();
     }
 }

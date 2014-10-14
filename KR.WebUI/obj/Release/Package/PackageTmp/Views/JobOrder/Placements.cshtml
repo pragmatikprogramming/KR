@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Placements";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<div class="header">
+    <h1 class="page-title">Placements</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid" style="margin-top: 5%">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td style="font-weight: bold;">Job Title</td>
+                        <td style="font-weight: bold;">Company</td>
+                        <td style="font-weight: bold;">Date Placed</td>
+                        <td style="font-weight: bold;">Fee</td>
+                        <td style="font-weight: bold;">Salary</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var job in Model)
+                    {
+                        <tr>
+                            <td><a href="/JobOrder/DisplayJobOrder/@job.Id">@job.PositionTitle</a></td>
+                            <td>@job.CompanyName</td>
+                            <td>@job.DatePlaced.ToString("MM-dd-yyyy")</td>
+                            <td>@job.RecruitmentFee</td>
+                            <td>@job.Salary</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </div>
+</div>

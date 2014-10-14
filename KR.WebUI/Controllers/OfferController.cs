@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using KR.Domain.Abstract;
 using KR.Domain.Entities;
+using KR.WebUI.Infrastructure;
 
 namespace KR.Controllers
 {
@@ -17,8 +18,10 @@ namespace KR.Controllers
         {
             OfferRepository = OfferRepo;
             InterviewRepository = InterviewRepo;
+            ViewBag.Name = System.Web.HttpContext.Current.Session["Name"];
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult AddOffer(int id)
         {
@@ -28,6 +31,7 @@ namespace KR.Controllers
             return View("AddOffer");
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult AddOffer(Offer m_Offer)
         {
@@ -45,6 +49,7 @@ namespace KR.Controllers
             }
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult EditOffer(int id)
         {
@@ -55,6 +60,7 @@ namespace KR.Controllers
             return View("EditOffer", m_Offer);
         }
 
+        [KRAuth]
         [HttpPost]
         public ActionResult EditOffer(Offer m_Offer)
         {
@@ -75,6 +81,7 @@ namespace KR.Controllers
 
         }
 
+        [KRAuth]
         [HttpGet]
         public ActionResult DeleteOffer(int id)
         {

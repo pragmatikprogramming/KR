@@ -10,6 +10,9 @@ namespace KR.Domain.Entities
         private int id;
         private DateTime dateAquired;
         private int companyId;
+        private string companyName;
+
+
         private string positionTitle;
         private int salary;
         private string education;
@@ -57,6 +60,18 @@ namespace KR.Domain.Entities
             set 
             { 
                 companyId = value; 
+            }
+        }
+
+        public string CompanyName
+        {
+            get 
+            { 
+                return companyName; 
+            }
+            set 
+            { 
+                companyName = value; 
             }
         }
 

@@ -68,6 +68,10 @@ namespace KR.Domain.DataAccess
                 m_Cand.ResumeLastUpdate = candReader.GetDateTime(8);
                 m_Cand.ResumeBinary = candReader.GetSqlBytes(9).Buffer;
                 m_Cand.CompanyId = candReader.GetInt32(10);
+
+                Companies m_Company = DBCompany.RetrieveOne(m_Cand.CompanyId);
+                m_Cand.CompanyName = m_Company.Name;
+
                 m_Cand.FileType = candReader.GetString(11);
             }
 
@@ -244,6 +248,7 @@ namespace KR.Domain.DataAccess
                 m_Cand.ResumeLastUpdate = candReader.GetDateTime(8);
                 m_Cand.CompanyId = candReader.GetInt32(10);
                 m_Cand.FileType = candReader.GetString(11);
+                m_Cand.IsPlaced = isPlaced(m_Cand.Id);
 
                 m_Candidates.Add(m_Cand);
             }
@@ -362,7 +367,31 @@ namespace KR.Domain.DataAccess
 
             updCand.ExecuteNonQuery();
 
+            queryString = "DELETE FROM CRM_CandidateSearchTermMapping WHERE candidateId = @id";
+            SqlCommand delMap = new SqlCommand(queryString, conn);
+            delMap.Parameters.AddWithValue("id", id);
+            delMap.ExecuteNonQuery();
+
+            SqlConnection searchTermConn = DB.DbReadOnlyConnect();
+            searchTermConn.Open();
+            queryString = "SELECT id, searchTerm FROM CRM_CandidateSearchTerms";
+            SqlCommand getTerms = new SqlCommand(queryString, searchTermConn);
+            SqlDataReader m_Terms = getTerms.ExecuteReader();
+
+            while (m_Terms.Read())
+            {
+                if (fileText.ToLower().Contains(m_Terms.GetString(1)))
+                {
+                    queryString = "INSERT INTO CRM_CandidateSearchTermMapping(candidateId, searchTermId) VALUES(@id, @term)";
+                    SqlCommand insTerm = new SqlCommand(queryString, conn);
+                    insTerm.Parameters.AddWithValue("id", id);
+                    insTerm.Parameters.AddWithValue("term", m_Terms.GetInt32(0));
+                    insTerm.ExecuteNonQuery();
+                }
+            }
+
             conn.Close();
+            searchTermConn.Close();
         }
 
         public static byte[] ViewResume(int id)
@@ -406,7 +435,33 @@ namespace KR.Domain.DataAccess
             delCand.Parameters.AddWithValue("id", id);
             delCand.ExecuteNonQuery();
 
+            queryString = "DELETE FROM CRM_CandidateSearchTermMapping WHERE candidateId = @id";
+            SqlCommand delMap = new SqlCommand(queryString, conn);
+            delMap.Parameters.AddWithValue("id", id);
+            delMap.ExecuteNonQuery();
+
             conn.Close();
+        }
+
+        public static int isPlaced(int id)
+        {
+            SqlConnection conn = DB.DbReadOnlyConnect();
+            conn.Open();
+
+            string queryString = "SELECT COUNT(*) FROM CRM_Placements WHERE candidateId = @candidateId";
+            SqlCommand getPlaced = new SqlCommand(queryString, conn);
+            getPlaced.Parameters.AddWithValue("candidateId", id);
+            int isPlaced = (int)getPlaced.ExecuteScalar();
+
+            conn.Close();
+
+            if (isPlaced > 0)
+            {
+                return 1;
+            }
+
+            return 0;
+            
         }
     }
 }
